@@ -38,6 +38,9 @@ files_to_append = [
 directory_in = 'input/'
 directory_out = 'compressed/'
 
+ext_in = '.csv'
+ext_out = '.hex'
+
 count_coverage = 0
 count_lines = 0
 
@@ -48,7 +51,7 @@ for filePath in files_to_append:
     file_coverage = 0
 
     # WRITE OUT
-    with open(filePath.replace(directory_in, directory_out), 'wb') as target:
+    with open(filePath.replace(directory_in, directory_out).replace(ext_in, ext_out), 'wb') as target:
         for line in content:
             data = lineToBytes(line)
             if data is not None:
