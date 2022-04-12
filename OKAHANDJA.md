@@ -11,17 +11,19 @@ eg.
 `2022-04-11,23:57:20,38.7,18.6,42.2,12.4,3.31,400.5,14.3`
 
 ```
-DATE : (6   bytes) 2022-04-11
-TIME : (8   bytes) 23:57:20
-HUM  : (3-4 bytes) 38.7
-AMB  : (3-4 bytes) 18.6
-SYS  : (3-4 bytes) 42.2
-PVT  : (3-4 bytes) 12.4
-V3   : (3-4 bytes) 3.31
-PVC  : (3-5 bytes) 400.5
-V12  : (3-4 bytes) 14.3
+DATE   : (10  bytes) 2022-04-11
+TIME   : (8   bytes) 23:57:20
+HUM    : (3-4 bytes) 38.7
+AMB    : (3-4 bytes) 18.6
+SYS    : (3-4 bytes) 42.2
+PVT    : (3-4 bytes) 12.4
+V3     : (3-4 bytes) 3.31
+PVC    : (3-5 bytes) 400.5
+V12    : (3-4 bytes) 14.3
+
+Commas : (8 bytes) ,
 ---
-TOTAL: 54 bytes max
+TOTAL: 55 bytes max
 DAILY: ~460 kilobytes
 ```
 
