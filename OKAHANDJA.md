@@ -22,9 +22,10 @@ PVC    : (3-5 bytes) 400.5
 V12    : (3-4 bytes) 14.3
 
 Commas : (8 bytes) ,
+EOL    : (1 byte) \n
 ---
-TOTAL: 55 bytes max
-DAILY: ~460 kilobytes
+TOTAL: 56 bytes max
+DAILY: ~470 kilobytes
 ```
 
 ## Compressed Syntax:
@@ -44,7 +45,7 @@ V3   : (2 bytes) 03 03          | decimal: 03 31
 PVC  : (4 bytes) 00 40 C8 43    | 32-bit float
 V12  : (2 bytes) 0E 03          | decimal: 14 03
 
-EOL  : (2 bytes) 0A 0A          | end of line
+EOL  : (2 bytes) D0 0A          | end of line \r \n
 ---
 TOTAL: 24 bytes max
 DAILY: ~190 kilobytes
