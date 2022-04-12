@@ -26,7 +26,7 @@ def lineToBytes(line: str) -> bytes:
     if line.startswith('DATE') or line.count(',') != 8:
         return None
 
-    line = line.removesuffix('\n')
+    line = line.replace('\n', '')
 
     DATE, TIME, HUM, AMB, SYS, PVT, V3, PVC, V12 = line.split(',')
 
