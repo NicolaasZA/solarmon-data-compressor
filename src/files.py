@@ -4,3 +4,9 @@ def filesToLines(fileNames: list):
         with open(filePath, 'r') as source:
             lines = lines + source.readlines()
     return lines
+
+def fileToLines(fileName: str):
+    lines = []
+    with open(fileName, 'r') as source:
+        lines = lines + source.readlines()
+    return lines
