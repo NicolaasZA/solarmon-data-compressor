@@ -1,5 +1,9 @@
 input/*.csv
-output/*.txt
+input/*.txt
+compressed/*.txt
+compressed/*.csv
+decompressed/*.txt
+decompressed/*.csv
 
 __pycache__/
 

@@ -1,10 +1,21 @@
 import struct
 
+from .text import padLeft
+
+
+def fromArr(vals: list):
+    return str(vals[0] + '.' + vals[1])
+
 
 def toArr(val: str):
     parts = val.split('.')
     second = parts[1][:2] if len(parts[1]) > 2 else parts[1]
     return [int(parts[0]), int(second)]
+
+
+def fromBigArr(vals: bytes):
+    f_v = struct.unpack('<f', vals)[0]
+    return "{:.1f}".format(f_v)
 
 
 def toBigArr(val: str):
@@ -31,7 +42,31 @@ def lineToBytes(line: str) -> bytes:
     v12_b = toArr(V12)
 
     try:
-        return bytes(dates + hum_b + amb_b + sys_b + pvt_b + v3_b + pvc_b + v12_b + [10, 10])
+        return bytes(dates + hum_b + amb_b + sys_b + pvt_b + v3_b + pvc_b + v12_b + [13, 10])
     except:
-        print(dates, hum_b, amb_b, sys_b, pvt_b, v3_b, pvc_b, v12_b)
         return None
+
+
+def bytesToLine(data: bytes) -> bytes:
+    """Convert 22/24 bytes into their counter-part plaintext."""
+    if len(data) < 22:
+        print(data)
+        return None
+
+    as_int = [str(int(x)) for x in data]
+
+    DATE = f'20{padLeft(as_int[0])}-{padLeft(as_int[1])}-{padLeft(as_int[2])}'
+    TIME = f'{padLeft(as_int[3])}:{padLeft(as_int[4])}:{padLeft(as_int[5])}'
+
+    HUM = fromArr(as_int[6:8])
+    AMB = fromArr(as_int[8:10])
+    SYS = fromArr(as_int[10:12])
+    PVT = fromArr(as_int[12:14])
+    V3 = fromArr(as_int[14:16])
+    PVC = fromBigArr(data[16:20])
+    V12 = fromArr(as_int[20:22])
+
+    return f'{DATE},{TIME},{HUM},{AMB},{SYS},{PVT},{V3},{PVC},{V12}\n'
+
+# 2022-04-04,23:57:20,53.6,17.5,42.8,11.4,3.31,0.0,14.3
+# 2022-4-4,23:57:20,53.6,17.5,42.8,11.4,3.31,0.0,14.3
