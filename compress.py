@@ -45,6 +45,7 @@ for filePath in files_to_append:
     # READ IN
     content = fileToLines(filePath)
     count_lines += len(content)
+    file_coverage = 0
 
     # WRITE OUT
     with open(filePath.replace(directory_in, directory_out), 'wb') as target:
@@ -52,10 +53,13 @@ for filePath in files_to_append:
             data = lineToBytes(line)
             if data is not None:
                 target.write(data)
-                count_coverage += 1
+                file_coverage += 1
+
+    count_coverage += file_coverage
+    print(f'Finished {filePath}, {file_coverage} of {len(content)} lines')
 
 
-print(f'done, wrote {count_coverage} of {len(count_lines)} lines')
+print(f'done, wrote {count_coverage} of {count_lines} lines')
 
 
 
