@@ -1,3 +1,7 @@
+import glob
+import os
+
+
 def filesToLines(fileNames: list):
     lines = []
     for filePath in fileNames:
@@ -5,8 +9,23 @@ def filesToLines(fileNames: list):
             lines = lines + source.readlines()
     return lines
 
+
 def fileToLines(fileName: str):
     lines = []
     with open(fileName, 'r') as source:
         lines = lines + source.readlines()
     return lines
+
+
+def getFileList(directoryName: str, targetExt: str):
+    if not directoryName.endswith('/'):
+        directoryName = directoryName + '/'
+    files = []
+    root = glob.glob(f'{directoryName}*')
+    for target in root:
+        if target.endswith(targetExt) and os.path.isfile(target):
+            files.append(target)
+        elif os.path.isdir(target):
+            # Recursively loop in
+            files = files + getFileList(target, targetExt)
+    return files
