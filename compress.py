@@ -1,4 +1,4 @@
-from src.okahandja import lineToBytes
+from src.okahandja import lineToBytes, formatName
 from src.files import fileToLines, getFileList
 
 
@@ -20,8 +20,10 @@ for filePath in files_to_append:
         count_lines += len(content)
         file_coverage = 0
 
+        out_path = formatName(filePath.replace(directory_in, directory_out).replace(ext_in, ext_out))
+
         # WRITE OUT
-        with open(filePath.replace(directory_in, directory_out).replace(ext_in, ext_out), 'wb') as target:
+        with open(out_path, 'wb') as target:
             for line in content:
                 data = lineToBytes(line)
                 if data is not None:

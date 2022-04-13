@@ -3,6 +3,21 @@ import struct
 from .text import padLeft
 
 
+def formatName(filePath: str):
+    # Receive: okahandja_2021_3_7.*
+    # Return: okh_2021_03_07.*
+    result = filePath.replace('okahandja', 'okh')
+
+    # format month
+    result = result.replace('_1_', '_01_').replace('_2_', '_02_').replace('_2_', '_02_')
+    result = result.replace('_3_', '_03_').replace('_4_', '_04_').replace('_5_', '_05_')
+    result = result.replace('_6_', '_06_').replace('_7_', '_07_').replace('_8_', '_08_').replace('_9_', '_09_')
+    # format days
+    result = result.replace('_1.', '_01.').replace('_2.', '_02.').replace('_2.', '_02.')
+    result = result.replace('_3.', '_03.').replace('_4.', '_04.').replace('_5.', '_05.')
+    result = result.replace('_6.', '_06.').replace('_7.', '_07.').replace('_8.', '_08.').replace('_9.', '_09.')
+    return result
+
 def fromArr(vals: list):
     return str(vals[0] + '.' + vals[1])
 
