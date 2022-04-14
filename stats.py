@@ -3,27 +3,27 @@ import glob
 import json
 import os.path as path
 
-EXT_HEX_IN = '.hex'
+EXT_DAT_IN = '.dat'
 EXT_CSV_IN = '.csv'
-FOLDER_HEX_IN = 'compressed/hex/'
+FOLDER_DAT_IN = 'compressed/dat/'
 FOLDER_CSV_IN = 'compressed/csv/'
 
 LINE_BYTES_SIZE = 24
 OUT_PATH = 'compressed/stats.json'
 
-files = glob.glob(FOLDER_HEX_IN + '*')
+files = glob.glob(FOLDER_DAT_IN + '*')
 
 fileStats = []
-for hexPath in files:
-    csvPath: str = hexPath.replace(FOLDER_HEX_IN, FOLDER_CSV_IN).replace(EXT_HEX_IN, EXT_CSV_IN)
-    dateString = hexPath.replace(EXT_HEX_IN, '').replace(FOLDER_HEX_IN, '').replace('okh_', '').replace('_', '-')
+for datPath in files:
+    csvPath: str = datPath.replace(FOLDER_DAT_IN, FOLDER_CSV_IN).replace(EXT_DAT_IN, EXT_CSV_IN)
+    dateString = datPath.replace(EXT_DAT_IN, '').replace(FOLDER_DAT_IN, '').replace('okh_', '').replace('_', '-')
     stamp = parser.parse(f'{dateString}T12:00:00+0200').timestamp()
 
     try:
-        hexSize = path.getsize(hexPath)
-        rowCount = int(hexSize / LINE_BYTES_SIZE)
+        datSize = path.getsize(datPath)
+        rowCount = int(datSize / LINE_BYTES_SIZE)
     except:
-        hexSize = 0
+        datSize = 0
         rowCount = 0
 
     try:
@@ -36,12 +36,12 @@ for hexPath in files:
         'stamp': stamp,
         'records': rowCount,
         'csv': {
-            'path': csvPath.replace(FOLDER_HEX_IN, 'hex/'),
+            'path': csvPath.replace(FOLDER_CSV_IN, 'csv/'),
             'size': csvSize
         },
-        'hex': {
-            'path': hexPath.replace(FOLDER_CSV_IN, 'csv/'),
-            'size': hexSize
+        'dat': {
+            'path': datPath.replace(FOLDER_DAT_IN, 'dat/'),
+            'size': datSize
         }
     })
 

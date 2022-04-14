@@ -6,7 +6,7 @@ directory_in = 'input/'
 directory_out = 'compressed/'
 
 ext_in = '.csv'
-ext_out = '.hex'
+ext_out = '.dat'
 
 count_coverage = 0
 count_lines = 0
@@ -20,11 +20,11 @@ for filePath in files_to_append:
         count_lines += len(content)
         file_coverage = 0
 
-        out_same_path = formatName(filePath.replace(directory_in, directory_out))
-        out_path = out_same_path.replace(ext_in, ext_out)
+        out_csv_path = formatName(filePath.replace(directory_in, directory_out))
+        out_dat_path = out_csv_path.replace(ext_in, ext_out)
 
         # WRITE OUT
-        with open(out_path, 'wb') as target:
+        with open(out_dat_path, 'wb') as target:
             for line in content:
                 data = lineToBytes(line)
                 if data is not None:
@@ -32,7 +32,7 @@ for filePath in files_to_append:
                     file_coverage += 1
 
         # COPY IN FILE TO OUT FOLDER
-        shutil.copyfile(filePath, out_same_path)
+        shutil.copyfile(filePath, out_csv_path)
 
         count_coverage += file_coverage
         print(f'Finished {filePath}, {file_coverage} of {len(content)} lines')
