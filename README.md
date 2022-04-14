@@ -1,4 +1,4 @@
-# fce-data-compressor
+# solarmon-data-compressor
 
 Compresses CSV data into the smallest compatible binary format.
 
