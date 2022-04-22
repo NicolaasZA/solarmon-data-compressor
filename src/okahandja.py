@@ -4,6 +4,11 @@ from .text import padLeft
 
 
 def formatName(filePath: str):
+    """
+    Rename a given file to the alphabetical version.
+    
+    eg 'okahandja_2021_3_7.*' becomes 'okh_2021_03_07.*'.
+    """
     # Receive: okahandja_2021_3_7.*
     # Return: okh_2021_03_07.*
     result = filePath.replace('okahandja', 'okh')
@@ -63,25 +68,51 @@ def lineToBytes(line: str) -> bytes:
 
 
 def bytesToLine(data: bytes) -> bytes:
-    """Convert 22/24 bytes into their counter-part plaintext."""
-    if len(data) < 22:
-        print(data)
+    """Convert 24 bytes into their counter-part plaintext."""
+    if len(data) < 24:
         return None
 
-    as_int = [str(int(x)) for x in data]
+    _ints = [str(int(x)) for x in data]
 
-    DATE = f'20{padLeft(as_int[0])}-{padLeft(as_int[1])}-{padLeft(as_int[2])}'
-    TIME = f'{padLeft(as_int[3])}:{padLeft(as_int[4])}:{padLeft(as_int[5])}'
+    DATE = f'20{padLeft(_ints[0])}-{padLeft(_ints[1])}-{padLeft(_ints[2])}'
+    TIME = f'{padLeft(_ints[3])}:{padLeft(_ints[4])}:{padLeft(_ints[5])}'
 
-    HUM = fromArr(as_int[6:8])
-    AMB = fromArr(as_int[8:10])
-    SYS = fromArr(as_int[10:12])
-    PVT = fromArr(as_int[12:14])
-    V3 = fromArr(as_int[14:16])
+    HUM = fromArr(_ints[6:8])
+    AMB = fromArr(_ints[8:10])
+    SYS = fromArr(_ints[10:12])
+    PVT = fromArr(_ints[12:14])
+    V3 = fromArr(_ints[14:16])
     PVC = fromBigArr(data[16:20])
-    V12 = fromArr(as_int[20:22])
+    V12 = fromArr(_ints[20:22])
 
     return f'{DATE},{TIME},{HUM},{AMB},{SYS},{PVT},{V3},{PVC},{V12}\n'
 
-# 2022-04-04,23:57:20,53.6,17.5,42.8,11.4,3.31,0.0,14.3
-# 2022-4-4,23:57:20,53.6,17.5,42.8,11.4,3.31,0.0,14.3
+def getDateFromBytes(data: bytes) -> str:
+    """Extract the date string from a bytecoded record in the format: YYYY-MM-DD."""
+    if len(data) < 3:
+        return None
+
+    _ints = [str(int(x)) for x in data]
+    
+    return f'20{padLeft(_ints[0])}-{padLeft(_ints[1])}-{padLeft(_ints[2])}'
+
+
+def getTimeFromBytes(data: bytes) -> str:
+    """Extract the time string from a bytecoded record in the format: HH:MM:SS."""
+    if len(data) < 6:
+        return None
+
+    _ints = [str(int(x)) for x in data]
+
+    return f'{padLeft(_ints[3])}:{padLeft(_ints[4])}:{padLeft(_ints[5])}'
+
+
+
+def getTimeValueFromBytes(data: bytes) -> int:
+    """Extract the time value from a bytecoded record in the format: HHMMSS."""
+    if len(data) < 6:
+        return None
+
+    _ints = [str(int(x)) for x in data]
+
+    return int(f'{padLeft(_ints[3])}{padLeft(_ints[4])}{padLeft(_ints[5])}')

@@ -28,4 +28,4 @@ Python 3 is required to run the scripts.
   - The measuring device(s) write to storage at specified intervals. Every day this interval overlaps into the next day around midnight. This means each day's files has a few records of the previous day in it. This script migrates them back to their proper file.
   - Imports all records from all the .dat files in _compressed/dat/_
   - Groups them by date.
-  - Writes each date's records into a 'normalized' file in _compressed/normalized/_
+  - Writes them back into their proper files.
