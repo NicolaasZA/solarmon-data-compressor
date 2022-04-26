@@ -16,6 +16,12 @@ def fileToLines(fileName: str):
         lines = lines + source.readlines()
     return lines
 
+def fileToBytes(filePath: str) -> bytes:
+    data: bytes = []
+    with open(filePath, 'rb') as input:
+        data += input.read()
+    return data
+
 
 def getFileList(directoryName: str, targetExt: str):
     if not directoryName.endswith('/'):

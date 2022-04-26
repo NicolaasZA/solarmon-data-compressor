@@ -3,7 +3,7 @@ from src.files import fileToLines, getFileList
 import shutil
 
 directory_in = 'input/'
-directory_out = 'compressed/'
+directory_out = 'compressed/normal/'
 
 ext_in = '.csv'
 ext_out = '.dat'

@@ -6,7 +6,7 @@ from .text import padLeft
 def formatName(filePath: str):
     """
     Rename a given file to the alphabetical version.
-    
+
     eg 'okahandja_2021_3_7.*' becomes 'okh_2021_03_07.*'.
     """
     # Receive: okahandja_2021_3_7.*
@@ -14,14 +14,21 @@ def formatName(filePath: str):
     result = filePath.replace('okahandja', 'okh')
 
     # format month
-    result = result.replace('_1_', '_01_').replace('_2_', '_02_').replace('_2_', '_02_')
-    result = result.replace('_3_', '_03_').replace('_4_', '_04_').replace('_5_', '_05_')
-    result = result.replace('_6_', '_06_').replace('_7_', '_07_').replace('_8_', '_08_').replace('_9_', '_09_')
+    result = result.replace('_1_', '_01_').replace(
+        '_2_', '_02_').replace('_2_', '_02_')
+    result = result.replace('_3_', '_03_').replace(
+        '_4_', '_04_').replace('_5_', '_05_')
+    result = result.replace('_6_', '_06_').replace(
+        '_7_', '_07_').replace('_8_', '_08_').replace('_9_', '_09_')
     # format days
-    result = result.replace('_1.', '_01.').replace('_2.', '_02.').replace('_2.', '_02.')
-    result = result.replace('_3.', '_03.').replace('_4.', '_04.').replace('_5.', '_05.')
-    result = result.replace('_6.', '_06.').replace('_7.', '_07.').replace('_8.', '_08.').replace('_9.', '_09.')
+    result = result.replace('_1.', '_01.').replace(
+        '_2.', '_02.').replace('_2.', '_02.')
+    result = result.replace('_3.', '_03.').replace(
+        '_4.', '_04.').replace('_5.', '_05.')
+    result = result.replace('_6.', '_06.').replace(
+        '_7.', '_07.').replace('_8.', '_08.').replace('_9.', '_09.')
     return result
+
 
 def fromArr(vals: list):
     return str(vals[0] + '.' + vals[1])
@@ -67,8 +74,7 @@ def lineToBytes(line: str) -> bytes:
         return None
 
 
-def bytesToLine(data: bytes) -> bytes:
-    """Convert 24 bytes into their counter-part plaintext."""
+def bytesToRecordObject(data: bytes) -> dict:
     if len(data) < 24:
         return None
 
@@ -82,10 +88,30 @@ def bytesToLine(data: bytes) -> bytes:
     SYS = fromArr(_ints[10:12])
     PVT = fromArr(_ints[12:14])
     V3 = fromArr(_ints[14:16])
-    PVC = fromBigArr(data[16:20])
+
+    PVC = fromBigArr(bytearray(data[16:20]))
     V12 = fromArr(_ints[20:22])
 
-    return f'{DATE},{TIME},{HUM},{AMB},{SYS},{PVT},{V3},{PVC},{V12}\n'
+    return {
+        'DATE': DATE,
+        'TIME': TIME,
+        'HUM': HUM,
+        'AMB': AMB,
+        'SYS': SYS,
+        'PVT': PVT,
+        'V3': V3,
+        'PVC': PVC,
+        'V12': V12
+    }
+
+
+def bytesToLine(data: bytes) -> bytes:
+    """Convert 24 bytes into their counter-part plaintext."""
+    if len(data) < 24:
+        return None
+    b = bytesToRecordObject(data)
+    return f'{b.DATE},{b.TIME},{b.HUM},{b.AMB},{b.SYS},{b.PVT},{b.V3},{b.PVC},{b.V12}\n'
+
 
 def getDateFromBytes(data: bytes) -> str:
     """Extract the date string from a bytecoded record in the format: YYYY-MM-DD."""
@@ -93,7 +119,7 @@ def getDateFromBytes(data: bytes) -> str:
         return None
 
     _ints = [str(int(x)) for x in data]
-    
+
     return f'20{padLeft(_ints[0])}-{padLeft(_ints[1])}-{padLeft(_ints[2])}'
 
 
@@ -105,7 +131,6 @@ def getTimeFromBytes(data: bytes) -> str:
     _ints = [str(int(x)) for x in data]
 
     return f'{padLeft(_ints[3])}:{padLeft(_ints[4])}:{padLeft(_ints[5])}'
-
 
 
 def getTimeValueFromBytes(data: bytes) -> int:
