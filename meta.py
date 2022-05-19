@@ -1,7 +1,8 @@
 from dateutil import parser
 import glob
 import json
-from src.files import fileToBytes
+from src.files import fileAsJSON, fileToBytes
+from src.meta import filesToProcessFromPaths
 from src.okahandja import bytesToRecordObject
 
 EXT_IN = '.dat'
@@ -10,10 +11,9 @@ PATH_OUT = 'compressed/meta.json'
 
 LINE_BYTES_SIZE = 24
 
-files = glob.glob(FOLDER_IN + '*' + EXT_IN)
+to_process, in_dir_paths, fileStats = filesToProcessFromPaths(FOLDER_IN, PATH_OUT)
 
-fileStats = []
-for datPath in files:
+for datPath in to_process:
     dateString = datPath.replace(EXT_IN, '').replace(
         FOLDER_IN, '').replace('okh_', '').replace('_', '-')
     stamp = parser.parse(f'{dateString}T12:00:00+0200').timestamp()
