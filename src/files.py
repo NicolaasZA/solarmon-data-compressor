@@ -1,4 +1,5 @@
 import glob
+import json
 import os
 
 
@@ -16,11 +17,17 @@ def fileToLines(fileName: str):
         lines = lines + source.readlines()
     return lines
 
+
 def fileToBytes(filePath: str) -> bytes:
     data: bytes = []
     with open(filePath, 'rb') as input:
         data += input.read()
     return data
+
+
+def fileAsJSON(filePath: str):
+    text = fileToLines(filePath)
+    return json.loads("".join(text))
 
 
 def getFileList(directoryName: str, targetExt: str):
