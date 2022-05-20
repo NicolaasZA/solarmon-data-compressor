@@ -123,7 +123,7 @@
       "shape": "chronograf-v2",
       "queries": [
        {
-        "text": "from(bucket: \"okahandja\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_measurement\"] == \"okahandja\")\n  |> filter(fn: (r) => r[\"_field\"] == \"AMB\" or r[\"_field\"] == \"PVT\" or r[\"_field\"] == \"SYS\")\n  |> filter(fn: (r) => r[\"host\"] == \"oka01\")\n  |> aggregateWindow(every: 1m, fn: mean, createEmpty: true)\n  |> yield(name: \"mean\")",
+        "text": "from(bucket: \"okahandja\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_measurement\"] == \"okahandja\")\n  |> filter(fn: (r) => r[\"_field\"] == \"AMB\" or r[\"_field\"] == \"PVT\" or r[\"_field\"] == \"SYS\")\n  |> filter(fn: (r) => r[\"host\"] == \"oka01\")\n  |> aggregateWindow(every: 1m, fn: mean, createEmpty: false)\n  |> yield(name: \"mean\")",
         "editMode": "advanced",
         "name": "",
         "builderConfig": {
@@ -234,7 +234,7 @@
       "shape": "chronograf-v2",
       "queries": [
        {
-        "text": "from(bucket: \"okahandja\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_measurement\"] == \"okahandja\")\n  |> filter(fn: (r) => r[\"_field\"] == \"PVC\" or r[\"_field\"] == \"PVT\")\n  |> filter(fn: (r) => r[\"host\"] == \"oka01\")\n  |> aggregateWindow(every: 15s, fn: mean, createEmpty: true)\n  |> yield(name: \"mean\")",
+        "text": "from(bucket: \"okahandja\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_measurement\"] == \"okahandja\")\n  |> filter(fn: (r) => r[\"_field\"] == \"PVC\" or r[\"_field\"] == \"PVT\")\n  |> filter(fn: (r) => r[\"host\"] == \"oka01\")\n  |> aggregateWindow(every: 15s, fn: mean, createEmpty: false)\n  |> yield(name: \"mean\")",
         "editMode": "advanced",
         "name": "",
         "builderConfig": {
@@ -345,7 +345,7 @@
       "shape": "chronograf-v2",
       "queries": [
        {
-        "text": "from(bucket: \"okahandja\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_measurement\"] == \"okahandja\")\n  |> filter(fn: (r) => r[\"_field\"] == \"V3\" or r[\"_field\"] == \"V12\")\n  |> filter(fn: (r) => r[\"host\"] == \"oka01\")\n  |> aggregateWindow(every: 15s, fn: mean, createEmpty: true)\n  |> yield(name: \"mean\")",
+        "text": "from(bucket: \"okahandja\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_measurement\"] == \"okahandja\")\n  |> filter(fn: (r) => r[\"_field\"] == \"V3\" or r[\"_field\"] == \"V12\")\n  |> filter(fn: (r) => r[\"host\"] == \"oka01\")\n  |> aggregateWindow(every: 5m, fn: mean, createEmpty: false)\n  |> yield(name: \"mean\")",
         "editMode": "advanced",
         "name": "",
         "builderConfig": {
