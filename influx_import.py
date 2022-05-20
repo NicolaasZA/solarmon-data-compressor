@@ -11,6 +11,9 @@ def convertToPoint(recordCSV: str, hostTag: str = None):
 
     parts = recordCSV.split(',')
 
+    if len(parts) < 9:
+        return None
+
     timestamp = f'{parts[0]}T{parts[1]}+0200'
 
     if hostTag is None:
@@ -45,10 +48,9 @@ client = influxdb_client.InfluxDBClient(
 )
 write_api = client.write_api(write_options=WriteOptions(batch_size=500, flush_interval=5000))
 
-print('Wiping bucket...')
-c = client.delete_api()
-c.delete(start='1900-01-01T00:00:00Z', stop='2030-12-31T23:59:00Z', predicate='host="' + HOSTTAG + '"', bucket=BUCKET)
-
+# print('Wiping bucket...')
+# c = client.delete_api()
+# c.delete(start='1900-01-01T00:00:00Z', stop='2030-12-31T23:59:00Z', predicate='host="' + HOSTTAG + '"', bucket=BUCKET)
 
 print(f'Processing {len(files)} files...')
 for f in files:
