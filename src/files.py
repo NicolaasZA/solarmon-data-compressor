@@ -11,7 +11,7 @@ def filesToLines(fileNames: list):
     return lines
 
 
-def fileToLines(fileName: str):
+def fileToLines(fileName: str) -> list[str]:
     lines = []
     with open(fileName, 'r') as source:
         lines = lines + source.readlines()
