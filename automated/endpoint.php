@@ -23,10 +23,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
     $uploadID = (int)read_get_safe('id', 0);
 
     $response->domain = 'http://data.klausius.co.za/okahandja/';
+    $response->projectName = 'Okahandja';
+    $response->recordTarget = 8640;
+
     if ($uploadID > 0) {
-        $response->data = $db->getUpload($uploadID);
+        $response->file = $db->getUpload($uploadID);
     } else {
-        $response->data = $db->getUploads();
+        $response->files = $db->getUploads();
     }
 
     echo json_encode($response);

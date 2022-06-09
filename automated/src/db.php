@@ -140,7 +140,7 @@ class DBHelper
     public function getUploads()
     {
         if ($this->isConnected()) {
-            $sth = $this->conn->prepare('SELECT * FROM okh_files');
+            $sth = $this->conn->prepare('SELECT id,fdate,fpath,0 as records FROM okh_files');
             if ($sth == false) {
                 return Codes::INTERNAL_ERROR;
             }
